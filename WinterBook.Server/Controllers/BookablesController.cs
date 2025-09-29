@@ -2,7 +2,6 @@
 using WinterBook.Server.Models;
 using WinterBook.Server.Data;
 
-
 /**
  * API Controller to manage Bookable objects
  * Add, Update, and Delete Bookables of Cars and Accommodation etc

@@ -1,8 +1,36 @@
-@WinterBook.Server_HostAddress = http://localhost:7139
+@WinterBook.Server_HostAddress = https://localhost:7139
 
-GET {{WinterBook.Server_HostAddress}}/weatherforecast/
+###
+GET {{WinterBook.Server_HostAddress}}/api/bookables
 Accept: application/json
 
 ###
-GET {{WinterBook.Server_HostAddress}}/api/Books
+GET {{WinterBook.Server_HostAddress}}/api/bookables/1
+Accept: application/json
+
+###
+POST {{WinterBook.Server_HostAddress}}/api/bookables
+Content-Type: application/json
+Accept: application/json
+{
+  "title": "New Bookable",
+  "provider": "Jimmy",
+  "customer": "Bob",
+  "objectType": "car"
+}
+
+###
+PUT {{WinterBook.Server_HostAddress}}/api/bookables/1
+Content-Type: application/json
+Accept: application/json
+{
+  "id": 1,
+  "title": "Updated Bookable",
+  "provider": "Alice",
+  "customer": "Charlie",
+  "objectType": "bike"
+}
+
+###
+DELETE {{WinterBook.Server_HostAddress}}/api/bookables/1
 Accept: application/json

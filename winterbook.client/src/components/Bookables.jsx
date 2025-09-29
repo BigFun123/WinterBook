@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import EditBookable from "./EditBookable";
 import Bookable from "./Bookable";
+import { CAR, ACCOMMODATION } from "../constants/constants";
+
+const port = import.meta.env.VITE_API_PORT;
+const host = import.meta.env.VITE_API_HOST;
+const apiUrl = `${host}:${port}/api/bookables`;
 
 /**
  * Bookables component
@@ -29,7 +34,7 @@ const Bookables = () => {
             }
 
             try {
-                const result = await fetch(`https://localhost:7139/api/bookables/${type}`,
+                const result = await fetch(`${apiUrl}/${type}`,
                     {
                         headers: {
                             ///Authorization: `Bearer ${jwt}`
@@ -38,6 +43,7 @@ const Bookables = () => {
                         method: "POST",
                         body: JSON.stringify(data)
                     });
+                console.log(result);
 
             } catch (error) {
                 console.error(error);
@@ -50,10 +56,10 @@ const Bookables = () => {
 
     const fetchBookables = async () => {
 
-        const jwt = localStorage.getItem("token");
+        //const jwt = localStorage.getItem("token");
 
         try {
-            const result = await fetch("https://localhost:7139/api/bookables",
+            const result = await fetch(`${apiUrl}`,
                 {
                     // headers: { Authorization: `Bearer ${jwt}` },
                     method: "GET",
@@ -82,7 +88,7 @@ const Bookables = () => {
             const id = data.id;
 
             try {
-                const result = await fetch(`https://localhost:7139/api/bookables/${id}`,
+                const result = await fetch(`${apiUrl}/${id}`,
                     {
                         headers: {
                             ///Authorization: `Bearer ${jwt}`
@@ -91,6 +97,7 @@ const Bookables = () => {
                         method: "DELETE",
                         body: JSON.stringify(data)
                     });
+                console.log(result);
 
             } catch (error) {
                 console.error(error);
@@ -115,7 +122,7 @@ const Bookables = () => {
             const id = data.id;
 
             try {
-                const result = await fetch(`https://localhost:7139/api/bookables/${id}`,
+                const result = await fetch(`${apiUrl}/${id}`,
                     {
                         headers: {
                             ///Authorization: `Bearer ${jwt}`
@@ -124,6 +131,7 @@ const Bookables = () => {
                         method: "PUT",
                         body: JSON.stringify(data)
                     });
+                console.log(result);
 
                 setEditable(null);
 
@@ -154,8 +162,8 @@ const Bookables = () => {
                     ))
                 )}
             </ul>
-            <button onClick={() => addBookable("accommodation")} className="button">Book Room</button>
-            <button onClick={() => addBookable("car")} className="button">Book Car</button>
+            <button onClick={() => addBookable(ACCOMMODATION)} className="button">Book Room</button>
+            <button onClick={() => addBookable(CAR)} className="button">Book Car</button>
         </div>
     );
 };
