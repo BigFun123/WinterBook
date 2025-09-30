@@ -55,7 +55,7 @@ namespace WinterBook.Server.Data
             }
             AddRecord(record);
 
-            //todo: can update only diff fields
+            //todo: update only diff fields. we're simply overwriting the existing record for demo
         }
 
         public void Delete(string id)

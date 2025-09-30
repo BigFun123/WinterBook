@@ -6,6 +6,7 @@ namespace WinterBook.Server.Models
     {
         public string? Id { get; set; }
         public string? ObjectType { get; set; } = "Accommodation";
+        public string? Date { get; set; }
         public string? Title { get; set; }
         public string? Provider { get; set; }
         public string? Customer { get; set; }

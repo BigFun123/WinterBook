@@ -1,27 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import EditBookable from "./EditBookable";
 import Bookable from "./Bookable";
-import { CAR, ACCOMMODATION } from "../constants/constants";
+import { Offerings } from "./Offerings";
 
 const port = import.meta.env.VITE_API_PORT;
 const host = import.meta.env.VITE_API_HOST;
 const apiUrl = `${host}:${port}/api/bookables`;
+const apiUrlOfferings = `${host}:${port}/api/offerings`;
 
 /**
  * Bookables component
  * Displays a list of bookable items.
  */
 const Bookables = () => {
-    const [items, setItems] = React.useState([]);
+    const [bookables, setBookables] = React.useState([]);
+    const [offerings, setOfferings] = React.useState([]);
     const [editable, setEditable] = React.useState(null);
 
     useEffect(() => {
         // Fetch bookable items from the API 
         console.log("Fetching bookables...");
+        fetchOfferings();
         fetchBookables();
     }, []);
 
-    const addBookable = async (type) => {
+    const doAddBookable = useCallback((type) => {
+        addBookable(type);
+    }, []);
+
+    const addBookable = useCallback(async (type) => {
         // Logic to add a new bookable item
         const addBookable = async () => {
 
@@ -51,7 +58,30 @@ const Bookables = () => {
 
         }
         await addBookable();
-        fetchBookables();
+        fetchBookables();    
+    }, [])
+
+    const fetchOfferings = async () => {
+        //const jwt = localStorage.getItem("token");
+        try {
+            const result = await fetch(`${apiUrlOfferings}`,
+                {
+                    // headers: { Authorization: `Bearer ${jwt}` },
+                    method: "GET",
+                    accept: "application/json"
+                });
+
+            if (result.ok) {
+                const data = await result.json();
+                console.log("Offerings:", data);
+                // add unique keys
+                data.forEach((data, index) => data.key = index);
+                setOfferings(data);
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const fetchBookables = async () => {
@@ -71,7 +101,7 @@ const Bookables = () => {
                 console.log(data);
                 // add unique keys
                 data.forEach((data, index) => data.key = index);
-                setItems(data);
+                setBookables(data);
             }
 
         } catch (error) {
@@ -150,20 +180,19 @@ const Bookables = () => {
 
     return (
         <div className="bookables">
-            <h2>My Bookings</h2>
+            <Offerings addBookable={doAddBookable} offerings={offerings} />
+            <h2>My Bookings (Click to edit)</h2>
             <ul className="container">
-                {items.length === 0 ? (
+                {bookables.length === 0 ? (
                     <li>No bookables available.</li>
                 ) : (
-                        items.map((item) => (
+                        bookables.map((item) => (
                             <li key={item.id} className="container">
                                 <Bookable bookable={item} onSelect={onSelect} onDelete={onDelete}></Bookable>
                             </li>
                     ))
                 )}
             </ul>
-            <button onClick={() => addBookable(ACCOMMODATION)} className="button">Book Room</button>
-            <button onClick={() => addBookable(CAR)} className="button">Book Car</button>
         </div>
     );
 };

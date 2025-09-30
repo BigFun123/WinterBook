@@ -4,7 +4,8 @@ import './EditBookable.css';
 const EditBookable = ({ bookable, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         title: bookable?.title || '',
-        provider: bookable?.provider || ''
+        provider: bookable?.provider || '',
+        date: bookable?.date ? new Date(bookable.date).toISOString().split("T")[0] : ""
     });
 
     console.log(formData);
@@ -47,7 +48,8 @@ const EditBookable = ({ bookable, onSave, onCancel }) => {
                         name="provider"
                         value={formData.provider}
                         onChange={handleChange}
-                        className = "input"
+                        className="input"
+                        disabled
                     />
                 </div>                
                 <div className="hcontainer">
@@ -59,6 +61,17 @@ const EditBookable = ({ bookable, onSave, onCancel }) => {
                         value={bookable?.objectType || ''}
                         className="input"
                         disabled
+                    />
+                </div>
+                <div className="hcontainer">
+                    <label htmlFor="date" className="label">Date</label>
+                    <input
+                        id="date"
+                        name="date"
+                        type="date"
+                        value={formData?.date || ''}
+                        onChange={handleChange}
+                        className="input"                        
                     />
                 </div>
                 <div>

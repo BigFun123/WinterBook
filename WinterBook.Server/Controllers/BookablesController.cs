@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WinterBook.Server.Models;
 using WinterBook.Server.Data;
+using Microsoft.AspNetCore.Authorization;
 
 /**
  * API Controller to manage Bookable objects
@@ -10,6 +11,7 @@ namespace WinterBook.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize] // if using jwt
     public class BookablesController : ControllerBase
     {
         private readonly DBAdapter _dBAdapter;
@@ -41,6 +43,7 @@ namespace WinterBook.Server.Controllers
         public JsonResult Post([FromBody] Accommodation bookable)
         {   
             bookable.Room ??= "Standard"; // default value
+            bookable.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             _dBAdapter.AddRecord(bookable);
             return new JsonResult(new { message = "success" });
         }
@@ -50,22 +53,28 @@ namespace WinterBook.Server.Controllers
         public JsonResult Post([FromBody] Car bookable)
         {
             bookable.Model??= "Sedan"; // default value
+            bookable.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             _dBAdapter.AddRecord(bookable);
+            
+            // could check for lots of errors, overposting, jwt, ephemeral ids, etc
             return new JsonResult(new { message = "success" });
         }
 
         // PUT api/<BookablesController>/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Accommodation bookable)
+        public JsonResult Put(string id, [FromBody] Accommodation bookable)
         {   
+            //todo: for security and overposting just update relevant fields
             _dBAdapter.UpdateRecord(bookable);
+            return new JsonResult(new { message = "success" });
         }
 
         // DELETE api/<BookablesController>/5
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public JsonResult Delete(string id)
         {
             _dBAdapter.Delete(id);
+            return new JsonResult(new { message = "success" });
         }
     }
 }

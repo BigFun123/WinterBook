@@ -8,6 +8,7 @@ const Bookable = ({ bookable, onSelect, onDelete }) => {
               <div>{bookable.title}</div>
               <div>{bookable.objectType}</div>
               <div>{bookable.provider}</div>
+              <div>{bookable.date}</div>
           </button>
           <button onClick={() => onDelete && onDelete(bookable)}>X</button>
     </div>

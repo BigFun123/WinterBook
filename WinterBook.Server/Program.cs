@@ -34,14 +34,11 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
-
 // add cors for client server on different origin
+// of course not safe for production, but ok for demo
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -59,8 +56,7 @@ app.UseCors();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-
-// Configure the HTTP request pipeline.
+// add openApi/Swagger support
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -8,6 +8,7 @@ namespace WinterBook.Server.Models
     {        
         public string? Title { get; set; }
         public string? Provider { get; set; }        
-        public string? Customer { get ; set; }
+        public string? Customer { get ; set; }        
+        public string? Date{ get; set; }  // todo: replace with datetime, kept as string for demo simplicity
     }
 }
