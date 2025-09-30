@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import EditBookable from "./EditBookable";
 import Bookable from "./Bookable";
 import { Offerings } from "./Offerings";
@@ -13,9 +13,9 @@ const apiUrlOfferings = `${host}:${port}/api/offerings`;
  * Displays a list of bookable items.
  */
 const Bookables = () => {
-    const [bookables, setBookables] = React.useState([]);
-    const [offerings, setOfferings] = React.useState([]);
-    const [editable, setEditable] = React.useState(null);
+    const [bookables, setBookables] = useState([]);
+    const [offerings, setOfferings] = useState([]);
+    const [editable, setEditable] = useState(null);
 
     useEffect(() => {
         // Fetch bookable items from the API 

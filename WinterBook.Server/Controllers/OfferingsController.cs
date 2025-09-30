@@ -16,8 +16,8 @@ namespace WinterBook.Server.Controllers
         public IEnumerable<IBookable> Get()
         {
             var offerings = new List<IBookable>();
-            offerings.Add(new Car() { Title="Fancy Car", Provider="Hertz" } );
-            offerings.Add(new Accommodation() { Title="Luxury House", Provider = "AirBnB" } );
+            offerings.Add(new Car() { Title="Fancy Car", Provider="Hertz", Model="Sedan" } );
+            offerings.Add(new Accommodation() { Title="Luxury House", Provider = "AirBnB", Room= "Standard" } );
             return offerings.ToArray();
         }
     }
