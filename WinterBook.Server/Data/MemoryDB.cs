@@ -35,8 +35,7 @@ namespace WinterBook.Server.Data
         public void AddRecord(IStorable record)
         {   
             // Generate a unique hash as Id using Guid
-            string hash = Guid.NewGuid().ToString("N");
-            // If Id is int?, use a hashcode from the Guid string
+            string hash = Guid.NewGuid().ToString("N");            
             record.Id = hash;
             records.Add(record);            
         }

@@ -9,7 +9,7 @@ export const Offerings = ({ addBookable, offerings }) => {
             {offerings.map((offering) => (
                 <div key={offering.key}>
                     <button onClick={()=>addBookable(offering.objectType)} >
-                        <h3>{offering.title} ({offering.type})</h3>
+                        <h3>{offering.title} ({offering.objectType})</h3>
                         <p>Provided by: {offering.provider}</p>
                     </button>
                 </div>
